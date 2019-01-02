@@ -1,0 +1,1 @@
+{programSite:aaa,targetSite:aaa,isChoosen:false},{programSite:bbb,targetSite:bbb,isChoosen:false},{programSite:ccc,targetSite:ccc,isChoosen:false},{programSite:ddd,targetSite:ddd,isChoosen:false},{programSite:1,targetSite:1,isChoosen:false}

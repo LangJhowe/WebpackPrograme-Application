@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.shape.LineTo;
 import webPackUrl.Choosen;
 import webPackUrl.WebPackUrl;
 
@@ -46,7 +49,6 @@ public class MyController implements Initializable {
 	private TextField programSite;
 	@FXML
 	private TextField targetSite;
-
 	@FXML
 	private TableView tableView;
 
@@ -72,11 +74,14 @@ public class MyController implements Initializable {
 		showList();
 	}
 
-	public void loadData() throws FileNotFoundException, IOException {
+	public ObservableList<WebPackUrl> loadData() throws FileNotFoundException, IOException {
 		File file = new File("WebpackData/data.txt");
 		File dir = new File("WebpackData");
-		System.out.println(file.exists());
-		System.out.println(file.getAbsolutePath());
+		ObservableList<WebPackUrl> data = FXCollections.observableArrayList();
+		ObjectMapper mapper = new ObjectMapper();
+		WebPackUrl weboackurl = new WebPackUrl("ceshi", "ceshi", new CheckBox());
+		String ceshi = mapper.writeValueAsString(weboackurl);
+		System.out.println(mapper);
 		if (!dir.exists()) {
 			dir.mkdir();
 			dir.createNewFile();
@@ -88,6 +93,37 @@ public class MyController implements Initializable {
 				while ((line = br.readLine()) != null) {
 					// 一次读入一行数据
 					System.out.println(line);
+					StringBuffer bufferLine = new StringBuffer(line);
+					int len = bufferLine.length();
+					StringBuffer newBufferLine = new StringBuffer();
+					String[] dataString = bufferLine.substring(2,len-2).split("\\}\\,\\{");
+					for(String o:dataString) {
+						System.out.println(o);
+						String[] itemArr = o.split(",");
+						String programSite = "";
+						String trgetSite = "";
+						Boolean isChoosen = false;
+
+						for(String i:itemArr) {
+							int indexComma = i.indexOf(":");
+//							System.out.println(i.substring(0,indexComma)+"1");
+//							System.out.println("\"programSite\"1");
+//							System.out.println("\"programSite\""=="\"programSite\"");
+							if(i.substring(0,indexComma)=="\"programSite\"") {
+								programSite = i.substring(indexComma+1);
+//								System.out.println(i.substring(0,indexComma));
+							} else if(i.substring(0,indexComma)=="\"targeSite\"") {
+								trgetSite = i.substring(indexComma+1);
+							} else if(i.substring(0,indexComma)=="\"isChoosen\""){
+								isChoosen = Boolean.getBoolean(i.substring(indexComma+1));
+							}
+						}
+						data.add(new WebPackUrl(programSite, trgetSite, new CheckBox()));
+					}
+//					for(WebPackUrl j:data) {
+//						System.out.println(j.getProgramSite());
+//					}
+//					System.out.println(data);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -100,7 +136,7 @@ public class MyController implements Initializable {
 				// TODO: handle exception
 			}
 		}
-
+		return data;
 	}
 
 	public void showList() {
@@ -188,11 +224,9 @@ public class MyController implements Initializable {
 	public String aryToString(List data) {
 		StringBuilder sb = new StringBuilder();
 		ObservableList<WebPackUrl> data1 = tableView.getItems();
-		for(WebPackUrl o : data1) {
-			sb.append("{" + 
-					  "programSite:" + o.getProgramSite() + "," +
-					  "targetSite:" + o.getTargetSite() + "," +
-					  "isChoosen:" + o.getIsChoosen().isSelected() + "}").append(",");
+		for (WebPackUrl o : data1) {
+			sb.append("{" + "programSite:" + o.getProgramSite() + "," + "targetSite:" + o.getTargetSite() + ","
+					+ "isChoosen:" + o.getIsChoosen().isSelected() + "}").append(",");
 		}
 		sb.deleteCharAt(sb.length() - 1);
 		return sb.toString();

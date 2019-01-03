@@ -20,4 +20,21 @@
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>lib/jackson-annotations-2.9.7.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/%E5%8C%85/jackson/jackson-annotations-2.9.7.jar</locationURI>
+		</link>
+		<link>
+			<name>lib/jackson-core-2.9.7.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/%E5%8C%85/jackson/jackson-core-2.9.7.jar</locationURI>
+		</link>
+		<link>
+			<name>lib/jackson-databind-2.9.7.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/%E5%8C%85/jackson/jackson-databind-2.9.7.jar</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

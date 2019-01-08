@@ -25,10 +25,9 @@ public class Main extends Application {
     public void start(Stage stage) {
         try {
         	Parent root = FXMLLoader.load(getClass().getResource("/resource/MyScene.fxml"));
-            stage.setTitle("My Application");
+            stage.setTitle("Webpack Application");
             stage.setScene(new Scene(root));
 //            stage.setScene(scene);
-            System.out.println(root.toString());
             stage.show();
 
         } catch(Exception e) {

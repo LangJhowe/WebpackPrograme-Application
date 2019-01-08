@@ -7,21 +7,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="447.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MyController">
+<AnchorPane fx:id="layout" prefHeight="447.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MyController">
    <children>
-      <Button fx:id="addBtn" layoutX="474.0" layoutY="27.0" mnemonicParsing="false" onAction="#addProgram" text="添加" />
-      <TextField fx:id="programSite" layoutX="102.0" layoutY="27.0" prefHeight="23.0" prefWidth="363.0" />
-      <TextField fx:id="targetSite" layoutX="102.0" layoutY="67.0" prefHeight="23.0" prefWidth="363.0" />
-      <Text layoutX="14.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="项目位置" />
-      <Text layoutX="14.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="目标位置" />
+      <Button fx:id="addBtn" layoutX="478.0" layoutY="61.0" mnemonicParsing="false" onAction="#addProgram" text="添加" />
+      <TextField fx:id="programSite" layoutX="68.0" layoutY="61.0" prefHeight="23.0" prefWidth="368.0" />
+      <TextField fx:id="targetSite" layoutX="68.0" layoutY="86.0" prefHeight="23.0" prefWidth="368.0" />
+      <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="项目位置" />
+      <Text layoutX="14.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="目标位置" />
       <TableView fx:id="tableView" layoutX="16.0" layoutY="120.0" prefHeight="289.0" prefWidth="448.0">
         <columns>
-          <TableColumn editable="false" sortable="false" text="项目位置" />
-          <TableColumn editable="false" sortable="false" text="目标位置" />
-            <TableColumn editable="false" sortable="false" text="是否执行" />
+          <TableColumn fx:id="nameCol" editable="false" sortable="false" text="项目名称" />
+          <TableColumn fx:id="programSiteCol" editable="false" sortable="false" text="项目位置" />
+          <TableColumn fx:id="targetSiteCol" editable="false" sortable="false" text="目标位置" />
+          <TableColumn fx:id="isChoosenCol" editable="false" sortable="false" text="是否执行" />
+          <TableColumn fx:id="operatorCol" editable="false" sortable="false" text="删除" />
         </columns>
       </TableView>
-      <Button fx:id="webPackBtn" layoutX="478.0" layoutY="356.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="72.0" text="打包" onAction="#webpackSelectedProgram"/>
-      <Button fx:id="delBtn" layoutX="474.0" layoutY="67.0" mnemonicParsing="false" text="删除" />
+      <Button fx:id="webPackBtn" layoutX="478.0" layoutY="356.0" mnemonicParsing="false" onAction="#webpackSelectedProgram" prefHeight="53.0" prefWidth="72.0" text="打包" />
+      <Button fx:id="saveBtn" layoutX="478.0" layoutY="290.0" mnemonicParsing="false" onAction="#saveData" prefHeight="53.0" prefWidth="72.0" text="保存当前" />
+      <Button fx:id="programBtn" layoutX="435.0" layoutY="61.0" mnemonicParsing="false" onAction="#chooseProgramSite" text="···" />
+      <Button fx:id="targetBtn" layoutX="435.0" layoutY="86.0" mnemonicParsing="false" onAction="#chooseTargetSite" text="···" />
+      <Label layoutX="14.0" layoutY="39.0" text="项目名称" />
+      <TextField fx:id="name" layoutX="68.0" layoutY="35.0" prefHeight="23.0" prefWidth="368.0" />
    </children>
 </AnchorPane>

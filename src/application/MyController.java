@@ -1,38 +1,23 @@
 package application;
 
-import java.awt.Desktop.Action;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
-import javax.print.attribute.standard.RequestingUserName;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
@@ -40,20 +25,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.LineTo;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Callback;
-import webPackUrl.Choosen;
 import webPackUrl.WebPackUrl;
 
 public class MyController implements Initializable {
-	@FXML AnchorPane layout;
+	@FXML BorderPane layout;
 	@FXML Button programBtn;
 	@FXML Button targetBtn;
 	@FXML
@@ -265,7 +245,7 @@ public class MyController implements Initializable {
 	}
 
 	// 打包选中的数据并保存此时的数据
-	public void webpackSelectedProgram() {
+	public void webpackSelectedProgram() throws InterruptedException {
 		ObservableList<WebPackUrl> data = tableView.getItems();
 		List<WebPackUrl> selected = new ArrayList<WebPackUrl>();
 		for(WebPackUrl o: data) {
@@ -283,7 +263,6 @@ public class MyController implements Initializable {
 			System.out.println(o.toString());
 			if (o.getIsChoosen().isSelected()) {
 				selected.add(o);
-
 			}
 		}
 		System.out.println("---------------------");
@@ -320,17 +299,20 @@ public class MyController implements Initializable {
 	
 	//选择项目文件位置
 	public void chooseProgramSite() {
-		programSite.setText(chooseSite("选择项目所在文件夹").toString());
+		programSite.setText(chooseSite("选择项目所在文件夹"));
 	}
 	//选择目标文件位置
 	public void chooseTargetSite() {
-		targetSite.setText(chooseSite("选择目标生成文件夹").toString());
+		targetSite.setText(chooseSite("选择目标生成文件夹"));
 	}
-	public File chooseSite(String title) {
+	public String chooseSite(String title) {
 		//在controller获取scene
+		System.out.println("cs");
 		Stage stage = (Stage) layout.getScene().getWindow();
 		DirectoryChooser dChooser = new DirectoryChooser();
 		dChooser.setTitle(title);
-		return dChooser.showDialog(stage);
+		File file = dChooser.showDialog(stage);
+		if(file == null) return "";
+		return file.toString();
 	}
 }
